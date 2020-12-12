@@ -12,12 +12,12 @@ else {
 $moduleInstalled = Get-Module Posh-ACME
 if($null -eq $moduleInstalled){
     Write-Output "Posh-ACME module is NOT installed, proceeding with install"
-    Install-Module Posh-ACME -Force -Scope CurrentUser
+    Install-Module Posh-ACME -Force
 }
 else {
     Write-Output "Posh-ACME module is installed"
 }
 
-$configJSON = ConvertFrom-Json (Get-Content CertificateConfig.json)
+$configJSON = Get-Content CertificateConfig.json | ConvertFrom-Json
 
 Write-Output "Certificate Names are " $configJSON.certificateNames
