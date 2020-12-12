@@ -22,3 +22,4 @@ $configJSON = Get-Content CertificateConfig.json | ConvertFrom-Json
 
 Write-Output "Certificate Names are " $configJSON.certificateNames
 Write-Output "Emails sent to " $configJSON.emailNotifications
+Write-Output "Cloudflare token " $configJSON.cloudflareToken
