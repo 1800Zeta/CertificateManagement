@@ -1,17 +1,12 @@
-try {
-    $nugetVersion = Get-PackageProvider -Name NuGet    
-}
-catch {
-    Write-Output "NuGet is not installed"
-    Install-PackageProvider NuGet -Force
-    $nugetVersion = Get-PackageProvider -Name NuGet
-}
 
-if($nugetVersion.Version -lt "3.0.0.1"){
-    Write-Output "NuGet needs an update"
+$packageProviders = Get-PackageProvider -ListAvailable    
+
+if($nugetVersion.Name -contains "Nuget"){
+    Write-Output "NuGet is installed"
 }
 else {
-    Write-Output "NuGet is up to date"
+    Write-Output "NuGet needs installing"
+    Install-PackageProvider NuGet -Force -Confirm:$true
 }
 
 $moduleInstalled = Get-Module Posh-ACME
