@@ -1,13 +1,12 @@
 
 $packageProviders = Get-PackageProvider -ListAvailable    
 
-if($nugetVersion.Name -contains "Nuget"){
+if($packageProviders.Name -contains "Nuget"){
     Write-Output "NuGet is installed"
 }
 else {
     Write-Output "NuGet needs installing"
     Install-PackageProvider NuGet -Force
-    #Import-PackageProvider NuGet
 }
 
 $moduleInstalled = Get-Module Posh-ACME
@@ -18,3 +17,7 @@ if($null -eq $moduleInstalled){
 else {
     Write-Output "Posh-ACME module is installed"
 }
+
+$configJSON = ConvertFrom-Json (Get-Content CertificateConfig.json)
+
+Write-Output "Certificate Names are " $configJSON.certificateNames

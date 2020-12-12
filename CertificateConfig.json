@@ -1,0 +1,7 @@
+{
+    "certificateNames" : [
+        "*.marklewis.blog",
+        "*.lab.marklewis.blog",
+        "*.home.marklewis.blog"
+    ]
+}
