@@ -6,7 +6,8 @@ if($nugetVersion.Name -contains "Nuget"){
 }
 else {
     Write-Output "NuGet needs installing"
-    Install-PackageProvider NuGet -Force -Confirm:$true
+    Install-PackageProvider NuGet -Force
+    #Import-PackageProvider NuGet
 }
 
 $moduleInstalled = Get-Module Posh-ACME
