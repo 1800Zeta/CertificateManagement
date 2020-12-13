@@ -24,7 +24,7 @@ $domains = $configJSON.certificateNames
 
 try {
     $existingCert = Get-PACertificate
-    [string]$allSANs = $existingCert.allSANs
+    $allSANs = [string]$existingCert.allSANs
     Write-Output "Found $allSANs"
     Write-Output "Check $domains"
     if($domains -match $allSANs)
