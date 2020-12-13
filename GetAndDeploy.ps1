@@ -12,7 +12,7 @@ else {
 $moduleInstalled = Get-Module Posh-ACME
 if($null -eq $moduleInstalled){
     Write-Output "Posh-ACME module is NOT installed, proceeding with install"
-    Install-Module Posh-ACME -Force
+    Install-Module Posh-ACME -Force -Scope CurrentUser
 } else {
     Write-Output "Posh-ACME module is installed"
 }
@@ -26,6 +26,7 @@ try {
     $existingCerts = Get-PACertificate
     foreach($existingCert in $existingCerts)
     {
+        Write-Output "Found $existingCert"
         $allSANs = $existingCert.$allSANs
         if($domains -eq $allSANs)
         {
