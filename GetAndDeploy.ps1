@@ -20,16 +20,19 @@ if($null -eq $moduleInstalled){
 $configJSON = Get-Content CertificateConfig.json | ConvertFrom-Json
 $cfTokenSecure = ConvertTo-SecureString $configJSON.cloudflareToken -AsPlainText -Force
 $cfPluginArgs = @{ CFToken = $cfTokenSecure}
-$domains = [PSObject]$configJSON.certificateNames
+$domains = $configJSON.certificateNames
 
 try {
     $existingCert = Get-PACertificate
-    $allSANs = [string]$existingCert.allSANs
-    Write-Output "Found $allSANs"
+    $allSANs = $existingCert.allSANs
+    [string]$strSans
+    foreach($san in $allSANs)
+    {
+        $strSans += $san
+    }
+    Write-Output "Found $strSANs"
     Write-Output "Check $domains"
-    $sanComapre = Compare-Object $domains $allSANs
-    Write-Output "sanCompare " $sanComapre
-    if($null -eq $sanComapre)
+    if($strSans -eq $domains)
     {
         # Certificate Found
         Write-Output "Matching Certificate found"
