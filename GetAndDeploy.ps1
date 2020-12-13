@@ -28,6 +28,7 @@ try {
     Write-Output "Found $allSANs"
     Write-Output "Check $domains"
     $sanComapre = Compare-Object $domains $allSANs
+    Write-Output "sanCompare " $sanComapre
     if($null -eq $sanComapre)
     {
         # Certificate Found
