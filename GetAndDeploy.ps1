@@ -20,13 +20,23 @@ if($null -eq $moduleInstalled){
 $configJSON = Get-Content CertificateConfig.json | ConvertFrom-Json
 $cfTokenSecure = ConvertTo-SecureString $configJSON.cloudflareToken -AsPlainText -Force
 $cfPluginArgs = @{ CFToken = $cfTokenSecure}
+$domains = $configJSON.certificateNames
 
 try {
-    Get-PACertificate
+    $existingCerts = Get-PACertificate
+    foreach($existingCert in $existingCerts)
+    {
+        $allSANs = $existingCert.$allSANs
+        if($domains -eq $allSANs)
+        {
+            # Certificate Found
+            Write-Output "Matching Certificate found"
+        }
+    }
 }
 catch {
     $newPACertParams = @{
-        Domain     = $configJSON.certificateNames
+        Domain     = $domains
         DnsPlugin  = "Cloudflare"
         PluginArgs = $cfPluginArgs
         Contact    = $configJSON.emailNotifications
