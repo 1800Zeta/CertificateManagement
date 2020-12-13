@@ -23,16 +23,13 @@ $cfPluginArgs = @{ CFToken = $cfTokenSecure}
 $domains = $configJSON.certificateNames
 
 try {
-    $existingCerts = Get-PACertificate
-    foreach($existingCert in $existingCerts)
+    $existingCert = Get-PACertificate
+    Write-Output "Found $existingCert"
+    $allSANs = $existingCert.allSANs
+    if($domains -eq $allSANs)
     {
-        Write-Output "Found $existingCert"
-        $allSANs = $existingCert.allSANs
-        if($domains -eq $allSANs)
-        {
-            # Certificate Found
-            Write-Output "Matching Certificate found"
-        }
+        # Certificate Found
+        Write-Output "Matching Certificate found"
     }
 }
 catch {
