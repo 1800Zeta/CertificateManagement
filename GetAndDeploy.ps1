@@ -27,7 +27,7 @@ try {
     foreach($existingCert in $existingCerts)
     {
         Write-Output "Found $existingCert"
-        $allSANs = $existingCert.$allSANs
+        $allSANs = $existingCert.allSANs
         if($domains -eq $allSANs)
         {
             # Certificate Found
