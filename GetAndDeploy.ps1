@@ -24,15 +24,14 @@ $domains = $configJSON.certificateNames
 
 try {
     $existingCert = Get-PACertificate
-    $allSANs = $existingCert.allSANs
-    [string]$strSans = @()
-    foreach($san in $allSANs)
+    if($null -eq $existingCert)
     {
-        $strSans += $san
+        # Certs are empty to need to trigger create
     }
-    Write-Output "Found $strSANs"
+    $allSANs = $existingCert.allSANs
+    Write-Output "Found $allSANs"
     Write-Output "Check $domains"
-    if($strSans -eq $domains)
+    if($allSans -eq $domains)
     {
         # Certificate Found
         Write-Output "Matching Certificate found"
@@ -44,7 +43,7 @@ catch {
         DnsPlugin  = "Cloudflare"
         PluginArgs = $cfPluginArgs
         Contact    = $configJSON.emailNotifications
-        AcceptTOS  = $true
+        AcceptTOS  = $null
     }
     New-PACertificate $newPACertParams
 }
