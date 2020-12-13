@@ -25,7 +25,7 @@ $domains = $configJSON.certificateNames
 try {
     $existingCert = Get-PACertificate
     $allSANs = $existingCert.allSANs
-    [string]$strSans
+    [string]$strSans = @()
     foreach($san in $allSANs)
     {
         $strSans += $san
