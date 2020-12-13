@@ -27,7 +27,7 @@ try {
     $allSANs = [string]$existingCert.allSANs
     Write-Output "Found $allSANs"
     Write-Output "Check $domains"
-    if($domains -match $allSANs)
+    if($domains -eq $allSANs)
     {
         # Certificate Found
         Write-Output "Matching Certificate found"
