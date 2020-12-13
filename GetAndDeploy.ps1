@@ -20,7 +20,7 @@ if($null -eq $moduleInstalled){
 $configJSON = Get-Content CertificateConfig.json | ConvertFrom-Json
 $cfTokenSecure = ConvertTo-SecureString $configJSON.cloudflareToken -AsPlainText -Force
 $cfPluginArgs = @{ CFToken = $cfTokenSecure}
-$domains = $configJSON.certificateNames
+$domains = [PSObject]$configJSON.certificateNames
 
 try {
     $existingCert = Get-PACertificate
